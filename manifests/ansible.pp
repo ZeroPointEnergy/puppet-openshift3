@@ -38,7 +38,6 @@ class openshift3::ansible {
   exec { 'Run ansible':
     cwd     => "/root/openshift-ansible",
     command => "ansible-playbook playbooks/byo/config.yml",
-#    command => "/bin/true",
     timeout => 1000,
     logoutput => on_failure,
   }
