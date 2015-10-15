@@ -30,7 +30,7 @@ class openshift3::router {
 --credentials=/etc/openshift/master/openshift-router.kubeconfig \
 --images='${::openshift3::component_images}' \
 --service-account=router",
-    unless => "oadm --namespace=default router",
+    unless => "oc get svc/router -n default",
     timeout => 600,
   } ->
 
