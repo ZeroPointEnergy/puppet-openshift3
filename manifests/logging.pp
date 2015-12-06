@@ -1,9 +1,25 @@
 class openshift3::logging {
 
+  if $::openshift3::deployment_type == "enterprise" {
+    $image_prefix = 'registry.access.redhat.com/openshift3/'
+  } else {
+    $image_prefix = 'openshift/origin-'
+  }
+
   new_project { "logging": } ->
+
+  new_secret { "logging-deployer":
+    namespace => "logging",
+    source => "/dev/null",
+  } ->
   
   new_service_account { "logging-deployer":
     namespace => "logging",
+  } ->
+
+  add_secret_to_sa { "logging-deployer":
+    namespace => "logging",
+    service_account => "logging-deployer",
   } ->
 
   add_role_to_user { "edit":
@@ -25,4 +41,6 @@ class openshift3::logging {
     template_parameters => "KIBANA_HOSTNAME=kibana.${::openshift3::app_domain},ES_CLUSTER_SIZE=1,PUBLIC_MASTER_URL=https://${::openshift3::master}:8443,ES_INSTANCE_RAM=512MB",
     resource_namespace => "logging",
   }
+
+#,IMAGE_PREFIX=${image_prefix}
 }
