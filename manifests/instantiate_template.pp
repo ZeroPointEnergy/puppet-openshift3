@@ -5,6 +5,7 @@ define openshift3::instantiate_template ($template_namespace = 'openshift', $tem
     cwd         => "/root",
     command     => "oc process logging-deployer-template -n ${template_namespace} -v '${template_parameters}' | oc create -n ${resource_namespace} -f -",
 #    unless      => "oc get ${namespace_opt} ${resource} -o json | jq '.items[] | select(.roleRef.name == \"${title}\").userNames' | grep -q '\"${user}\"'",
+#oc get template logging-support-template -o json  | jq '.objects[] | "\(.kind) \(.metadata.name // .metadata.generateName)"'
     timeout     => 300,
     logoutput   => on_failure,
   }

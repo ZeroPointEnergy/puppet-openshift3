@@ -38,7 +38,12 @@ class openshift3::logging {
 
   instantiate_template { "logging-deployer-template":
     template_namespace => "openshift",
-    template_parameters => "KIBANA_HOSTNAME=kibana.${::openshift3::app_domain},ES_CLUSTER_SIZE=1,PUBLIC_MASTER_URL=https://${::openshift3::master}:8443,ES_INSTANCE_RAM=512MB",
+    template_parameters => "KIBANA_HOSTNAME=kibana.${::openshift3::app_domain},ES_CLUSTER_SIZE=1,PUBLIC_MASTER_URL=https://${::openshift3::master}:8443,ES_INSTANCE_RAM=1G",
+    resource_namespace => "logging",
+  }
+
+  instantiate_template { "logging-support-template":
+    template_namespace => "logging",
     resource_namespace => "logging",
   }
 
