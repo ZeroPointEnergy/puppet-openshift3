@@ -8,6 +8,7 @@ class openshift3 (
   $version = undef,
   $ssh_key = undef,
   $cluster_network_cidr = $::openshift3::params::cluster_network_cidr,
+  $schedulable = $::openshift3::params::schedulable, 
 ) inherits ::openshift3::params {
  
   $version_array = split($version, '\.')
